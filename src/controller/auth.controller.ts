@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { signUp } from '../service/auth.service';
+import { signIn, signUp } from '../service/auth.service';
 
 export class AuthController {
-  create(req: Request, res: Response, next: NextFunction) {
+  signup(req: Request, res: Response, next: NextFunction) {
     return signUp(req, res, next)
+  }
+
+  signin(req: Request, res: Response, next: NextFunction) {
+    return signIn(req, res, next)
   }
 }
