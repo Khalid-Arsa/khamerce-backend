@@ -5,6 +5,7 @@ import morgan from "morgan";
 import helmet from "helmet"
 import cors from "cors"
 import { config } from './config';
+import router from "./router/index"
 
 /* Create a new Express application. */
 const app: Express = express();
@@ -24,9 +25,8 @@ app.use(cors());
 /* Configuration */
 dotenv.config();
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
+/* Router */
+app.use(router);
 
 app.listen(config.port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${config.port}`);

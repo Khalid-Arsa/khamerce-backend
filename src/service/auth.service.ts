@@ -1,19 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserInterface } from "../lib/interface/auth";
-import { AppError } from '../utils/error/AppError';
+import { Request, Response, NextFunction } from "express";
 
 export async function signUp(req: Request, res: Response, next: NextFunction) {
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    confirmPassword,
-    role,
-    phoneNumber,
-    address,
-  }: UserInterface = req.body;
+  res.send("Signup Successfully");
+}
 
-  console.log("Email: ", email)
-
+export async function signIn(req: Request, res: Response, next: NextFunction) {
+  res.send("Signin Successfully");
 }
