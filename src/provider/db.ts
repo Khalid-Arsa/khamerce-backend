@@ -8,4 +8,4 @@ const pool = mysql.createPool({
   database: config.db.database
 })
 
-module.exports = pool.promise()
+export const db = pool.promise()
