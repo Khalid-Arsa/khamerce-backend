@@ -8,9 +8,6 @@ export const validateSignupRequest = [
   check("password")
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 character long"),
-  check("confirm_password")
-    .equals("password")
-    .withMessage("Password do not match"),
   check("address").notEmpty().withMessage("Address is required"),
   check("phone_number").notEmpty().withMessage("Phone number is required"),
 ];
