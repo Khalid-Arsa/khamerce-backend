@@ -8,7 +8,7 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
     const payload: UserInterface = req.body;
 
     if (payload.confirm_password !== payload.password) {
-      return next(new AppError("Passwords don't match", 400));
+      return next(new AppError("Password don't match", 400));
     }
 
     let email: string = await User.findByEmail(payload.email);
