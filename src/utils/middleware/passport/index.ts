@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { ExtractJwt, Strategy as JWTstrategy } from 'passport-jwt';
 import { UserInterface } from '../../../lib/interface/auth/index.interface';
 import { User } from '../../../model/user.model';
+import { config } from '../../../config';
 
 passport.use(
   'signup',
@@ -24,55 +26,50 @@ passport.use(
   ),
 );
 
-// passport.use(
-//   'login',
-//   new LocalStrategy(
-//     {
-//       usernameField: 'email',
-//       passwordField: 'password',
-//     },
-//     async (email, password, done) => {
-//       try {
-//         const user:
-//           | (UserInterface &
-//               Required<{
-//                 _id: string;
-//               }>)
-//           | null = await User.findByEmail(email);
+passport.use(
+  'login',
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    async (email, password, done) => {
+      try {
+        const user: UserInterface = await User.findByEmail(email);
 
-//         if (!user) {
-//           return done(null, false, { message: 'User not found' });
-//         }
+        if (!user) {
+          return done(null, false, { message: 'User not found' });
+        }
 
-//         // const validate: boolean = await user.isValidPassword(password);
+        const validate = await User.verifyPassword(password, user.password)
 
-//         // if (!validate) {
-//         //   return done(null, false, { message: 'Wrong Password' });
-//         // }
+        if (!validate) {
+          return done(null, false, { message: 'Wrong Password' });
+        }
 
-//         return done(null, user, { message: 'Logged in Successfully' });
-//       } catch (error) {
-//         return done(error);
-//       }
-//     },
-//   ),
-// );
+        return done(null, user, { message: 'Logged in Successfully' });
+      } catch (error) {
+        return done(error);
+      }
+    },
+  ),
+);
 
-// passport.use(
-//   new JWTstrategy(
-//     {
-//       secretOrKey: process.env.JWT_SECRET,
-//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//     },
-//     async (token, done) => {
-//       try {
-//         return done(null, token.user);
-//       } catch (error) {
-//         return done(error);
-//       }
-//     },
-//   ),
-// );
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: config.secret,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        return done(error);
+      }
+    },
+  ),
+);
 
 // passport.use(
 //   'admin',
