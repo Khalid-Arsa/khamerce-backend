@@ -47,9 +47,9 @@ export class User {
     return user[0]?.email;
   }
 
-  static findById(id: number) {
+  static findById(id: number | undefined) {
     let sql = `SELECT * FROM users WHERE id = ${id};`;
 
-    return db.execute(sql);
+    return db.query(sql);
   }
 }

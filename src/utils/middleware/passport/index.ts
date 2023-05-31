@@ -1,7 +1,10 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { UserInterface } from '../../../lib/interface/auth/index.interface';
+import { User } from '../../../model/user.model';
 
 passport.use(
+  'signup',
   new LocalStrategy(
     {
       usernameField: 'email',
@@ -9,8 +12,6 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        console.log("Password: ", password)
-        console.log("email: ", email)
         const user = {
           email,
           password,
@@ -33,21 +34,21 @@ passport.use(
 //     async (email, password, done) => {
 //       try {
 //         const user:
-//           | (UserDocumentInterface &
+//           | (UserInterface &
 //               Required<{
 //                 _id: string;
 //               }>)
-//           | null = await UserModel.findOne({ email });
+//           | null = await User.findByEmail(email);
 
 //         if (!user) {
 //           return done(null, false, { message: 'User not found' });
 //         }
 
-//         const validate: boolean = await user.isValidPassword(password);
+//         // const validate: boolean = await user.isValidPassword(password);
 
-//         if (!validate) {
-//           return done(null, false, { message: 'Wrong Password' });
-//         }
+//         // if (!validate) {
+//         //   return done(null, false, { message: 'Wrong Password' });
+//         // }
 
 //         return done(null, user, { message: 'Logged in Successfully' });
 //       } catch (error) {
