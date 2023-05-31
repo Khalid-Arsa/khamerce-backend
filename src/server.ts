@@ -9,6 +9,7 @@ import cors from "cors"
 import { config } from './config';
 import router from "./router/index"
 import { AppError } from './utils/error/AppError';
+import '../src/utils/middleware/passport/index';
 
 /* Configuration */
 dotenv.config();
