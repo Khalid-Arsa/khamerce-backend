@@ -1,12 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { ExtractJwt, Strategy as JWTstrategy } from 'passport-jwt';
-import env from 'dotenv';
-
-env.config();
 
 passport.use(
-  'signup',
   new LocalStrategy(
     {
       usernameField: 'email',

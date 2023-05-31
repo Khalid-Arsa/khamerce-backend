@@ -1,6 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import passport from 'passport';
-import session from "express-session";
+import session from 'express-session';
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -10,6 +10,9 @@ import { config } from './config';
 import router from "./router/index"
 import { AppError } from './utils/error/AppError';
 
+/* Configuration */
+dotenv.config();
+
 /* Create a new Express application. */
 const app: Express = express();
 
@@ -17,6 +20,13 @@ const app: Express = express();
   Use application-level middleware for common functionality, including
   logging, parsing, and session handling.
 */
+// app.use(session({
+//   secret: "Secret",
+//   resave: false,
+//   saveUninitialized: false
+// }))
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(cors());
 app.use(express.json());
 app.use(helmet());
@@ -24,10 +34,6 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
-/* Configuration */
-dotenv.config();
 
 /* Router */
 app.use(router);

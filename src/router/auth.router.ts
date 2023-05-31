@@ -8,7 +8,7 @@ const authController = new AuthController();
 
 router.post(
   '/signup', 
-  passport.authenticate('local', { session: false }),
+  // passport.authenticate('signup', { session: false }),
   validateSignupRequest,
   isRequestValidated,
   authController.signup
