@@ -3,10 +3,10 @@ import { signIn, signUp } from '../service/auth.service';
 
 export class AuthController {
   signup(req: Request, res: Response, next: NextFunction) {
-    return signUp(req, res, next)
-  }
+    return signUp(req, res, next);
+  };
 
   signin(req: Request, res: Response, next: NextFunction) {
-    return signIn(req, res, next)
-  }
+    return signIn(req, res, next);
+  };
 }

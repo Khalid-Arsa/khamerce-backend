@@ -1,8 +1,9 @@
 import { UserInterface } from "../lib/interface/auth/index.interface";
 import { db } from "../provider/db";
-import bcrypt from "bcrypt";
+import bcrypt, { compareSync } from "bcrypt";
 
 const bcryptRegex = /^\$(?:2a|2x|2y|2b)\$\d+\$/;
+let encryptedPassword: string;
 
 export class User {
   protected userData: UserInterface | undefined;
@@ -12,7 +13,6 @@ export class User {
   }
 
   async save() {
-    let encryptedPassword;
     
     if(!bcryptRegex.test(this.userData?.password as string)) {
       encryptedPassword = await bcrypt.hash(this.userData?.password as string, 10)
@@ -44,12 +44,17 @@ export class User {
     let sql = `SELECT * FROM users WHERE email = '${email}';`;
     let [user, _]: any = await db.query(sql);
 
-    return user[0]?.email;
+    return user[0];
   }
 
-  static findById(id: number | undefined) {
-    let sql = `SELECT * FROM users WHERE id = ${id};`;
+  static async findById(id?: number) {
+    let sql = `SELECT * FROM users WHERE id = '${id}';`;
+    let [user, _]: any = await db.query(sql);
+    console.log("user: ", id)
+    return user[0];
+  }
 
-    return db.query(sql);
+  static async verifyPassword(password: string, userPass: string): Promise<Boolean> {
+    return bcrypt.compare(password, userPass);
   }
 }
