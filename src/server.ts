@@ -9,7 +9,6 @@ import cors from "cors"
 import { config } from './config';
 import router from "./router/index"
 import { AppError } from './utils/error/AppError';
-import '../src/utils/middleware/passport/index';
 
 /* Configuration */
 dotenv.config();
@@ -17,19 +16,26 @@ dotenv.config();
 /* Create a new Express application. */
 const app: Express = express();
 
+import '../src/utils/middleware/passport/index';
+
+
 /* 
   Use application-level middleware for common functionality, including
   logging, parsing, and session handling.
 */
-// app.use(session({
-//   secret: "Secret",
-//   resave: false,
-//   saveUninitialized: false
-// }))
-// app.use(passport.initialize());
-// app.use(passport.session());
-app.use(cors());
+app.use(session({
+  secret: config.secret_session as string,
+  resave: true,
+  rolling: true, // forces resetting of max age,
+  cookie: {
+    maxAge: 360000,
+    secure: false
+  }
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
+app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("dev"));

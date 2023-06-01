@@ -11,5 +11,6 @@ export const config = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
   },
-  secret: process.env.JWT_SECRET
+  secret: process.env.JWT_SECRET,
+  secret_session: process.env.SESSION_SECRET
 }

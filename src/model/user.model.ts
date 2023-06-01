@@ -50,7 +50,7 @@ export class User {
   static async findById(id?: number) {
     let sql = `SELECT * FROM users WHERE id = '${id}';`;
     let [user, _]: any = await db.query(sql);
-    console.log("user: ", id)
+    
     return user[0];
   }
 
