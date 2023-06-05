@@ -35,7 +35,7 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
 
 export async function signIn(req: Request, res: Response, next: NextFunction) {
   passport.authenticate(
-    "login",
+    "signin",
     async (err: any, user: UserInterface, info: string) => {
       try {
         const { message }: any = info;
