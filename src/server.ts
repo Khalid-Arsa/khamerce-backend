@@ -16,9 +16,6 @@ dotenv.config();
 /* Create a new Express application. */
 const app: Express = express();
 
-import '../src/utils/middleware/passport/index';
-
-
 /* 
   Use application-level middleware for common functionality, including
   logging, parsing, and session handling.
@@ -41,6 +38,9 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+/* Passport Middleware */
+import '../src/utils/middleware/passport/index';
 
 /* Router */
 app.use(router);
