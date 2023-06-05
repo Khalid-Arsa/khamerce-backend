@@ -44,8 +44,6 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
           return next(new AppError(message, 401));
         }
 
-        console.log("User: ", req.session.id)
-
         return req.login(user, { session: false }, async (error) => {
           if (error) return next(error);
           

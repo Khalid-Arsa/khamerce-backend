@@ -12,7 +12,7 @@ const authController = new AuthController();
 
 router.post(
   "/signup",
-  passport.authenticate('signup', { session: false }),
+  passport.authenticate('signup'),
   validateSignupRequest,
   isRequestValidated,
   authController.signup
