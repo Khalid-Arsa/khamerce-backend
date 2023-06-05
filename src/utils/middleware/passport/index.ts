@@ -6,28 +6,7 @@ import { User } from '../../../model/user.model';
 import { config } from '../../../config';
 
 passport.use(
-  'signup',
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password',
-    },
-    async (email, password, done) => {
-      try {
-        const user = {
-          email,
-          password,
-        };
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
-    },
-  ),
-);
-
-passport.use(
-  'login',
+  'signin',
   new LocalStrategy(
     {
       usernameField: 'email',
