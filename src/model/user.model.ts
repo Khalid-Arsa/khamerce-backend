@@ -1,6 +1,6 @@
 import { UserInterface } from "../lib/interface/auth/index.interface";
 import { db } from "../provider/db";
-import bcrypt, { compareSync } from "bcrypt";
+import bcrypt from "bcrypt";
 
 const bcryptRegex = /^\$(?:2a|2x|2y|2b)\$\d+\$/;
 let encryptedPassword: string;
