@@ -13,22 +13,24 @@ export class User {
   }
 
   async save() {
-    
-    if(!bcryptRegex.test(this.userData?.password as string)) {
-      encryptedPassword = await bcrypt.hash(this.userData?.password as string, 10)
+    if (!bcryptRegex.test(this.userData?.password as string)) {
+      encryptedPassword = await bcrypt.hash(
+        this.userData?.password as string,
+        10
+      );
     }
-    
+
     let users = {
-      "first_name": this.userData?.first_name,
-      "last_name": this.userData?.last_name,
-      "email": this.userData?.email,
-      "password": encryptedPassword,
-      "address": this.userData?.address,
-      "role": this.userData?.role,
-      "phone_number": this.userData?.phone_number,
+      first_name: this.userData?.first_name,
+      last_name: this.userData?.last_name,
+      email: this.userData?.email,
+      password: encryptedPassword,
+      address: this.userData?.address,
+      role: this.userData?.role,
+      phone_number: this.userData?.phone_number,
     };
 
-    let sql = 'INSERT INTO users SET ?'
+    let sql = "INSERT INTO users SET ?";
 
     return db.query(sql, users);
   }
@@ -50,11 +52,14 @@ export class User {
   static async findById(id?: number) {
     let sql = `SELECT * FROM users WHERE id = '${id}';`;
     let [user, _]: any = await db.query(sql);
-    
+
     return user[0];
   }
 
-  static async verifyPassword(password: string, userPass: string): Promise<Boolean> {
+  static async verifyPassword(
+    password: string,
+    userPass: string
+  ): Promise<Boolean> {
     return bcrypt.compare(password, userPass);
   }
 }
