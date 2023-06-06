@@ -55,7 +55,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
           );
 
           if (user.role !== "admin") {
-            return next(new AppError("Admin is not an Owner", 401));
+            return next(new AppError("Unauthorized", 401));
           }
 
           const userDoc: UserInterface = await User.findById(user.id);
