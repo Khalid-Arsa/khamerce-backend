@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-import { config } from "./config";
-import router from "./router/index";
+// import router from "./router/index";
+import http from "http";
 import { AppError } from "./utils/error/AppError";
 import "../src/utils/middleware/passport/index";
 
@@ -28,13 +28,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* Router */
-app.use(router);
+app.get('/', () => {
+  console.log("Damn")
+})
 
-app.listen(config.port, () => {
-  console.log(
-    `⚡️[server]: Server is running at http://localhost:${config.port}`
-  );
-});
+export const server = http.createServer(app)
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new AppError(
@@ -44,7 +42,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next(error);
 });
 
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable-next-line no-unused-vars */
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const error = {
     statusCode: err.statusCode || 500,
