@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-// import router from "./router/index";
+import router from "./router/index";
 import http from "http";
 import { AppError } from "./utils/error/AppError";
 import "../src/utils/middleware/passport/index";
@@ -28,9 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* Router */
-app.get('/', () => {
-  console.log("Damn")
-})
+app.use(router)
 
 export const server = http.createServer(app)
 
