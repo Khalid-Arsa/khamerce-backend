@@ -39,20 +39,18 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
     async (err: any, user: UserInterface, info: string) => {
       try {
         const { message }: any = info;
-        
+
         if (err || !user) {
           return next(new AppError(message, 401));
         }
 
         return req.login(user, { session: false }, async (error) => {
           if (error) return next(error);
-          
+
           const body = { _id: user.id, email: user.email, role: user.role };
-          const token = jwt.sign(
-            { user: body },
-            config.secret as string,
-            { expiresIn: "1d" }
-          );
+          const token = jwt.sign({ user: body }, config.secret as string, {
+            expiresIn: "1d",
+          });
 
           if (user.role !== "admin") {
             return next(new AppError("Unauthorized", 401));

@@ -1,37 +1,37 @@
-import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
-import { ExtractJwt, Strategy as JWTstrategy } from 'passport-jwt';
-import { UserInterface } from '../../../lib/interface/auth/index.interface';
-import { User } from '../../../model/user.model';
-import { config } from '../../../config';
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import { ExtractJwt, Strategy as JWTstrategy } from "passport-jwt";
+import { UserInterface } from "../../../lib/interface/auth/index.interface";
+import { User } from "../../../model/user.model";
+import { config } from "../../../config";
 
 passport.use(
-  'signin',
+  "signin",
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: "email",
+      passwordField: "password",
     },
     async (email, password, done) => {
       try {
         const user: UserInterface = await User.findByEmail(email);
 
         if (!user) {
-          return done(null, false, { message: 'User not found' });
+          return done(null, false, { message: "User not found" });
         }
 
-        const validate = await User.verifyPassword(password, user.password)
+        const validate = await User.verifyPassword(password, user.password);
 
         if (!validate) {
-          return done(null, false, { message: 'Wrong Password' });
+          return done(null, false, { message: "Wrong Password" });
         }
 
-        return done(null, user, { message: 'Logged in Successfully' });
+        return done(null, user, { message: "Logged in Successfully" });
       } catch (error) {
         return done(error);
       }
-    },
-  ),
+    }
+  )
 );
 
 passport.use(
@@ -46,8 +46,8 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    },
-  ),
+    }
+  )
 );
 
 // passport.use(
