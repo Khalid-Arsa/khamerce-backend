@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
+import { AppError } from "../../error/AppError";
+import { UserInterface } from "../../../lib/interface/user.interface";
+import UserModel from "../../../model/user.model";
 
 export const validateSignupRequest = [
   check("first_name").notEmpty().withMessage("first name is required"),
@@ -31,5 +34,37 @@ export const isRequestValidated = (
       success: false,
     });
   }
+  next();
+};
+
+export const isPasswordCorrect = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const {
+    confirm_password,
+    password
+  } = req.body;
+
+  if (confirm_password !== password) {
+    return next(new AppError("Password don't match", 400));
+  };
+
+  next()
+};
+
+
+export const isEmailExisted = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
+  const userExist: UserInterface | null = await UserModel.findOne({ email });
+  if (userExist) {
+    return next(new AppError("This email is already exist", 400));
+  };
+
   next();
 };

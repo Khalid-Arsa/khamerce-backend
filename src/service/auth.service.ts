@@ -16,12 +16,7 @@ export async function signUp(req: Request, res: Response, next: NextFunction) {
       role,
       address,
       phone_number,
-      confirm_password
     }: UserInterface = req.body;
-
-    if (confirm_password !== password) {
-      return next(new AppError("Password don't match", 400));
-    }
 
     const createUser = await UserModel.create({
       first_name,

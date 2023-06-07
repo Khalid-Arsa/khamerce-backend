@@ -1,11 +1,12 @@
 import express from "express";
 import { AuthController } from "../controller/auth.controller";
 import {
+  isEmailExisted,
+  isPasswordCorrect,
   isRequestValidated,
   validateSigninRequest,
   validateSignupRequest,
 } from "../utils/middleware/validator";
-import { isEmailExisted } from "../utils/middleware/isEmailExisted";
 
 const router = express.Router();
 const authController = new AuthController();
@@ -15,6 +16,7 @@ router.post(
   validateSignupRequest,
   isRequestValidated,
   isEmailExisted,
+  isPasswordCorrect,
   authController.signup,
 );
 
