@@ -5,6 +5,7 @@ import {
   validateSigninRequest,
   validateSignupRequest,
 } from "../utils/middleware/validator";
+import { isEmailExisted } from "../utils/middleware/isEmailExisted";
 
 const router = express.Router();
 const authController = new AuthController();
@@ -13,7 +14,8 @@ router.post(
   "/signup",
   validateSignupRequest,
   isRequestValidated,
-  authController.signup
+  isEmailExisted,
+  authController.signup,
 );
 
 router.post(

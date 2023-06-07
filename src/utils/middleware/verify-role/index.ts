@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../../../model/user.model";
+import UserModel from "../../../model/user.model";
 
 export const verifyRole = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const user = await User.findAll();
+  const user = await UserModel.find();
   return user;
 };
